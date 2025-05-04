@@ -1,9 +1,11 @@
 // Main yedek 31.03.2025
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import "@rainbow-me/rainbowkit/styles.css";
 import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "react-hot-toast";
+import { Providers } from "./providers";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -15,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "xGen AI",
+  title: "SocigenX AI",
   description: "Find the best AI tools for your needs",
 };
 
@@ -31,7 +33,7 @@ export default function RootLayout({
         suppressHydrationWarning>
         <div className="absolute top-0 z-[-2] opacity-50 h-screen w-screen bg-neutral-950 bg-[radial-gradient(ellipse_70%_60%_at_50%_-20%,rgba(64,203,90,0.8),rgba(255,255,255,0))]" />
         <TooltipProvider>
-          {children}
+          <Providers>{children}</Providers>
           <Toaster
             position="top-center"
             toastOptions={{

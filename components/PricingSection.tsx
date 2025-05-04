@@ -3,30 +3,12 @@ import React, { useState } from "react";
 import HoverButton from "./ui/hover-button";
 import { Label } from "./ui/label";
 import { Switch } from "./ui/switch";
-import { Tables } from "@/database.types";
 import { Badge } from "./ui/badge";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { CheckIcon } from "lucide-react";
 
-type Product = Tables<"products"> & {
-  index?: number;
-};
-type Price = Tables<"prices">;
-
-interface ProductWithPrices extends Product {
-  prices: Price[];
-}
-
-interface PricingProps {
-  products: ProductWithPrices[];
-  mostPopularProduct?: string;
-}
-
-const PricingSection = ({
-  products,
-  mostPopularProduct = "xPro",
-}: PricingProps) => {
+const PricingSection = () => {
   const [billingInterval, setBillingInterval] = useState("month");
   return (
     <section className="px-1 md:px-0 lg:container mx-auto min-h-screen">

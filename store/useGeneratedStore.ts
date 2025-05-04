@@ -28,24 +28,29 @@ const useGeneratedStore = create<GeneratedStore>((set) => ({
 
       if (!success) {
         set({ error: error, loading: false });
+        toast.error(error || "Failed to generate image", { id: toastId });
         return;
       }
 
-      console.log("Data", data);
+      console.log("Image generation successful, data:", data);
 
-      const dataWithUrl = data.map((url: string) => {
+      // Handle array or string result formats from different models
+      const urls = Array.isArray(data) ? data : [data];
+      
+      const dataWithUrl = urls.map((url: string) => {
         return {
           url,
           ...values,
         };
       });
+      
       set({ images: dataWithUrl, loading: false });
       toast.success("Image generated successfully", { id: toastId });
 
+      // Store images (this is now just a logging function)
       await storeImages(dataWithUrl);
-      toast.success("Image stored successfully", { id: toastId });
     } catch (error) {
-      console.error(error);
+      console.error("Error in generateImage:", error);
       set({ error: "An error occurred. Please try again", loading: false });
       toast.error("An error occurred. Please try again", { id: toastId });
     }

@@ -1,56 +1,39 @@
 "use client";
-import { Database } from "@/database.types";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { ImagesIcon, Package, Repeat1 } from "lucide-react";
-import { FaRobot } from "react-icons/fa";
-import { AiOutlineDingding } from "react-icons/ai";
+import { ImagesIcon, Package, WalletIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAccount } from "wagmi";
 
-interface StatsCardProps {
-  modelCount: number;
-  imageCount: number;
-  credits: Database["public"]["Tables"]["credits"]["Row"] | null;
-}
+const StatsCard = () => {
+  const { isConnected } = useAccount();
+  
+  const stats = [
+    {
+      title: "Wallet Connected",
+      value: () => isConnected ? "Yes" : "No",
+      icon: WalletIcon,
+      gradient: "from-lime-500/20 to-lime-500/10",
+      hoverGradient: "from-lime-500/30 to-lime-500/20",
+    },
+    {
+      title: "Available Tools",
+      value: () => 3,
+      icon: Package,
+      gradient: "from-lime-500/20 to-lime-500/10",
+      hoverGradient: "from-lime-500/30 to-lime-500/20",
+    },
+    {
+      title: "Image Generation",
+      value: () => "Unlimited",
+      icon: ImagesIcon,
+      gradient: "from-lime-500/20 to-lime-500/10",
+      hoverGradient: "from-lime-500/30 to-lime-500/20",
+    }
+  ];
 
-const stats = [
-  {
-    title: "Total Images",
-    value: (props: StatsCardProps) => props.imageCount,
-    icon: ImagesIcon,
-    gradient: "from-lime-500/20 to-lime-500/10",
-    hoverGradient: "from-lime-500/30 to-lime-500/20",
-  },
-  {
-    title: "Total Models",
-    value: (props: StatsCardProps) => props.modelCount,
-    icon: FaRobot,
-    gradient: "from-lime-500/20 to-lime-500/10",
-    hoverGradient: "from-lime-500/30 to-lime-500/20",
-  },
-  {
-    title: "Image Credits",
-    value: (props: StatsCardProps) => props.credits?.image_generation_count || 0,
-    maxValue: (props: StatsCardProps) => props.credits?.max_image_generation_count || 0,
-    icon: Package,
-    gradient: "from-lime-500/20 to-lime-500/10",
-    hoverGradient: "from-lime-500/30 to-lime-500/20",
-    showMax: true,
-  },
-  {
-    title: "Model Credits",
-    value: (props: StatsCardProps) => props.credits?.model_training_count || 0,
-    maxValue: (props: StatsCardProps) => props.credits?.max_model_training_count || 0,
-    icon: AiOutlineDingding,
-    gradient: "from-lime-500/20 to-lime-500/10",
-    hoverGradient: "from-lime-500/30 to-lime-500/20",
-    showMax: true,
-  },
-];
-
-const StatsCard = (props: StatsCardProps) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
       {stats.map((stat, index) => (
         <motion.div
           key={stat.title}
@@ -68,19 +51,9 @@ const StatsCard = (props: StatsCardProps) => {
               </div>
             </CardHeader>
             <CardContent className="flex items-center gap-2">
-              {stat.showMax ? (
-                <div className="flex flex-row justify-center items-center gap-3 font-bold">
-                  <p className="text-2xl">{stat.value(props)}</p>
-                  <Repeat1 className="w-4 h-4 text-lime-500" />
-                  <p className="text-lime-200 text-2xl">
-                    {stat.maxValue(props)}
-                  </p>
-                </div>
-              ) : (
-                <div className="text-2xl flex items-end gap-2 font-bold">
-                  {stat.value(props)}
-                </div>
-              )}
+              <div className="text-2xl flex items-end gap-2 font-bold">
+                {stat.value()}
+              </div>
             </CardContent>
           </Card>
         </motion.div>

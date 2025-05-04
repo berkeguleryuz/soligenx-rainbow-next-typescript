@@ -7,9 +7,9 @@ import { AnimatedGradientText } from "../ui/animated-gradient-tsx";
 
 const faqItems = [
   {
-    question: "What is xGen?",
+    question: "What is SocigenX?",
     answer:
-      "xGen is a powerful platform that combines various AI models to help you generate content, images, and automate your social media workflow. It's designed to make your creative process more efficient and productive.",
+      "SocigenX is a powerful platform that combines various AI models to help you generate content, images, and automate your social media workflow. It's designed to make your creative process more efficient and productive.",
   },
   {
     question: "How does the image generation work?",

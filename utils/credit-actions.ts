@@ -1,36 +1,30 @@
 "use server";
-import { Tables } from "@/database.types";
-import { createClient } from "@/utils/supabase/server";
 
 interface CreditResponse {
   error: null | string;
   success: boolean;
-  data: Tables<"credits"> | null;
+  data: {
+    image_generation_count: number;
+    max_image_generation_count: number;
+    model_training_count: number;
+    max_model_training_count: number;
+    post_generation_count: number;
+    max_post_generation_count: number;
+  } | null;
 }
 
 export async function getCredits(): Promise<CreditResponse> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: creditsData, error } = await supabase
-    .from("credits")
-    .select("*")
-    .eq("user_id", user?.id)
-    .single();
-
-  if (error) {
-    return {
-      error: error?.message || null,
-      success: false,
-      data: null,
-    };
-  }
-
+  // Instead of fetching from database, we'll return mock unlimited credits
   return {
     error: null,
     success: true,
-    data: creditsData,
+    data: {
+      image_generation_count: 999,
+      max_image_generation_count: 999,
+      model_training_count: 999,
+      max_model_training_count: 999,
+      post_generation_count: 999,
+      max_post_generation_count: 999
+    }
   };
 }

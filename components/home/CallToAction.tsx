@@ -62,13 +62,13 @@ const CallToAction = () => {
           </h2>
 
           <p className="text-xl text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Join thousands of creators who are already using xGen to
+            Join thousands of creators who are already using SocigenX to
             create, schedule, and manage their content with ease.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <Link
-              href="/login?state=signup"
+              href="/dashboard"
               className="group relative px-12 py-6 bg-lime-500 text-black font-semibold rounded-full hover:bg-lime-400 transition-all duration-300"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}>

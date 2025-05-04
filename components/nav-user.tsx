@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronsUpDown, CreditCard, Settings } from "lucide-react";
+import { ChevronsUpDown, Settings } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -19,7 +19,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { LogoutButtonDiv } from "./auth/LogoutButton";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 export function NavUser({
   user,
@@ -48,7 +48,7 @@ export function NavUser({
                         ?.split(" ")
                         .map((n) => n[0])
                         .join("")
-                    : "xGen"}
+                    : "SocigenX"}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -73,7 +73,7 @@ export function NavUser({
                           .split(" ")
                           .map((n) => n[0])
                           .join("")
-                      : "xGen"}
+                      : "SocigenX"}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -88,27 +88,81 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-lime-500/10" />
             <DropdownMenuGroup className="p-1">
-              <DropdownMenuItem asChild className="focus:bg-lime-300/10 focus:text-lime-400">
+              <DropdownMenuItem
+                asChild
+                className="focus:bg-lime-300/10 focus:text-lime-400">
                 <Link
                   href="/settings"
                   className="flex items-center gap-2 px-3 py-2 text-sm text-lime-200 hover:text-lime-400 hover:bg-black/20 rounded-md cursor-pointer transition-colors">
                   <Settings className="w-4 h-4" />
-                  Account Settings
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild className="focus:bg-lime-300/10 focus:text-lime-400">
-                <Link
-                  href="/subscriptions"
-                  className="flex items-center gap-2 px-3 py-2 text-sm text-lime-200 hover:text-lime-400 hover:bg-black/20 rounded-md cursor-pointer transition-colors">
-                  <CreditCard className="w-4 h-4" />
-                  Subscriptions
+                  Settings
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator className="bg-lime-500/10" />
-            <DropdownMenuItem className="flex items-center gap-2 px-3 py-2 text-sm text-red-200 hover:text-red-400 hover:bg-black/20 rounded-md cursor-pointer transition-colors focus:bg-black/20 focus:text-red-400">
-              <LogoutButtonDiv />
-            </DropdownMenuItem>
+            <div className="px-1 py-1">
+              <div className="px-2 py-1 rounded-md overflow-hidden">
+                <ConnectButton.Custom>
+                  {({
+                    account,
+                    chain,
+                    openAccountModal,
+                    openChainModal,
+                    openConnectModal,
+                    mounted,
+                  }) => {
+                    const ready = mounted;
+                    const connected = ready && account && chain;
+
+                    return (
+                      <div
+                        {...(!ready && {
+                          "aria-hidden": true,
+                          style: {
+                            opacity: 0,
+                            pointerEvents: "none",
+                            userSelect: "none",
+                          },
+                        })}
+                        className="w-full">
+                        {(() => {
+                          if (!connected) {
+                            return (
+                              <button
+                                onClick={openConnectModal}
+                                type="button"
+                                className="w-full flex items-center justify-center gap-2 bg-lime-500/20 hover:bg-lime-500/30 text-lime-200 hover:text-lime-100 transition-colors rounded-md px-3 py-2 text-sm font-medium">
+                                Connect Wallet
+                              </button>
+                            );
+                          }
+
+                          return (
+                            <div className="flex flex-col space-y-2 w-full">
+                              <button
+                                onClick={openChainModal}
+                                type="button"
+                                className="flex items-center gap-2 bg-lime-500/10 hover:bg-lime-500/20 text-lime-200 hover:text-lime-100 transition-colors rounded-md px-3 py-2 text-sm">
+                                {chain.name}
+                              </button>
+
+                              <button
+                                onClick={openAccountModal}
+                                type="button"
+                                className="flex items-center justify-between gap-2 bg-lime-500/10 hover:bg-lime-500/20 text-lime-200 hover:text-lime-100 transition-colors rounded-md px-3 py-2 text-sm">
+                                <span className="truncate">
+                                  {account.displayName}
+                                </span>
+                              </button>
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    );
+                  }}
+                </ConnectButton.Custom>
+              </div>
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
