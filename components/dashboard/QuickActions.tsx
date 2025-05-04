@@ -4,16 +4,15 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 import Link from "next/link";
-import { CreditCard, Podcast, Settings, WandSparkles } from "lucide-react";
+import { Podcast, WalletIcon, WandSparkles } from "lucide-react";
 import { Button } from "../ui/button";
-import { FaRobot } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const actions = [
   {
     title: "Generate Image",
     icon: WandSparkles,
-    href: "/image-generation",
+    href: "/generate-image",
     description: "Create stunning images with AI",
     color: "from-lime-500/20 to-lime-500/10",
     hoverColor: "from-lime-500/30 to-lime-500/20",
@@ -21,32 +20,16 @@ const actions = [
   {
     title: "Generate Post",
     icon: Podcast,
-    href: "/post-generator",
+    href: "/generate-post",
     description: "Create engaging social media posts",
     color: "from-lime-500/20 to-lime-500/10",
     hoverColor: "from-lime-500/30 to-lime-500/20",
   },
   {
-    title: "Train New Model",
-    icon: FaRobot,
-    href: "/train-model",
-    description: "Customize your AI models",
-    color: "from-lime-500/20 to-lime-500/10",
-    hoverColor: "from-lime-500/30 to-lime-500/20",
-  },
-  {
-    title: "Subscriptions",
-    icon: CreditCard,
-    href: "/subscriptions",
-    description: "Manage your subscription plans",
-    color: "from-lime-500/20 to-lime-500/10",
-    hoverColor: "from-lime-500/30 to-lime-500/20",
-  },
-  {
-    title: "Settings",
-    icon: Settings,
+    title: "Wallet",
+    icon: WalletIcon,
     href: "/settings",
-    description: "Configure your preferences",
+    description: "Manage your wallet",
     color: "from-lime-500/20 to-lime-500/10",
     hoverColor: "from-lime-500/30 to-lime-500/20",
   },

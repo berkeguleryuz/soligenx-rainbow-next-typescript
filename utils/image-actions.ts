@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { Database } from "@/database.types";
 import { imageGenerationFormSchema } from "@/components/image-generation/ImageUserInput";
 import { z } from "zod";
 import Replicate from "replicate";
-import { createClient } from "@/utils/supabase/server";
-import { imageMeta } from "image-meta";
-import { randomUUID } from "crypto";
-import { getCredits } from "./credit-actions";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
@@ -32,48 +27,46 @@ export async function generateImageAction(
     };
   }
 
-  const { data: credits } = await getCredits();
-  if (!credits?.image_generation_count || credits.image_generation_count <= 0) {
-    return {
-      error: "You have no image generation credits",
-      success: false,
-      data: null,
-    };
+  // Calculate dimensions based on aspect ratio
+  let width = 1024;
+  let height = 1024;
+  
+  if (input.aspect_ratio === "16:9") {
+    width = 1280;
+    height = 720;
+  } else if (input.aspect_ratio === "9:16") {
+    width = 720;
+    height = 1280;
+  } else if (input.aspect_ratio === "4:3") {
+    width = 1024;
+    height = 768;
+  } else if (input.aspect_ratio === "3:4") {
+    width = 768;
+    height = 1024;
   }
 
-  const modelInput = input.model.startsWith("berkeguleryuz/")
-    ? {
-        model: `dev`,
-        prompt: input.prompt,
-        lora_scale: 1,
-        guidance: input.guidance,
-        aspect_ratio: input.aspect_ratio,
-        num_images: input.num_outputs,
-        output_format: input.output_format,
-        output_quality: 80,
-        prompt_strength: 0.8,
-        num_inference_steps: input.num_inference_steps,
-        extra_lora_scale: 0,
-      }
-    : {
-        prompt: input.prompt,
-        go_fast: true,
-        guidance: input.guidance,
-        megapixels: "1",
-        aspect_ratio: input.aspect_ratio,
-        num_images: input.num_outputs,
-        output_format: input.output_format,
-        output_quality: 80,
-        prompt_strength: 0.8,
-        num_inference_steps: input.num_inference_steps,
-      };
+  // Format model input based on all form fields
+  const modelInput = {
+    prompt: input.prompt,
+    width: width,
+    height: height,
+    guidance_scale: Number(input.guidance),
+    num_inference_steps: Number(input.num_inference_steps),
+    output_format: input.output_format,
+    num_outputs: input.num_outputs || 1,
+    output_quality: input.output_quality || 80,
+  };
 
   try {
-    const output = await replicate.run(input.model as `${string}/${string}`, {
+    const modelToUse = input.model || "lucataco/sdxl-lcm:fb9c5cafb87e2c01d06a4c24e20ccd3b866e05e8e19586683a095c9641c78b12";
+    console.log("Using model:", modelToUse);
+    console.log("With input:", modelInput);
+
+    const output = await replicate.run(modelToUse as `${string}/${string}`, {
       input: modelInput,
     });
 
-    console.log("Output", output);
+    console.log("Generated Image Output:", output);
 
     return {
       error: null,
@@ -81,6 +74,7 @@ export async function generateImageAction(
       data: output,
     };
   } catch (error: any) {
+    console.error("Image generation error:", error);
     return {
       error: error.message || "Failed to generate image",
       success: false,
@@ -89,220 +83,31 @@ export async function generateImageAction(
   }
 }
 
-export async function imgUrlToBlob(url: string) {
-  const response = fetch(url);
-  const blob = (await response).blob();
-
-  return (await blob).arrayBuffer();
-}
-
-type storeImageInput = {
-  url: string;
-} & Database["public"]["Tables"]["generated_images"]["Insert"];
-
-export async function storeImages(data: storeImageInput[]) {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return {
-      error: "Unauthorized",
-      success: false,
-      data: null,
-    };
-  }
-
-  const uploadResults = [];
-
-  for (const img of data) {
-    const arrayBuffer = await imgUrlToBlob(img.url);
-    const { width, height, type } = imageMeta(new Uint8Array(arrayBuffer));
-
-    const fileName = `image_${randomUUID()}.${type}`;
-    const filePath = `${user.id}/${fileName}`;
-
-    const { error: storageError } = await supabase.storage
-      .from("generated_images")
-      .upload(filePath, arrayBuffer, {
-        contentType: `image/${type}`,
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (storageError) {
-      uploadResults.push({
-        fileName,
-        error: storageError.message,
-        success: false,
-        data: null,
-      });
-      continue;
-    }
-
-    const { data: dbData, error: dbError } = await supabase
-      .from("generated_images")
-      .insert([
-        {
-          user_id: user.id,
-          model: img.model,
-          prompt: img.prompt,
-          aspect_ratio: img.aspect_ratio,
-          guidance: img.guidance,
-          num_inference_steps: img.num_inference_steps,
-          output_format: img.output_format,
-          image_name: fileName,
-          width,
-          height,
-        },
-      ])
-      .select();
-
-    if (dbError) {
-      uploadResults.push({
-        fileName,
-        error: dbError.message,
-        success: !dbError,
-        data: dbData || null,
-      });
-      continue;
-    }
-  }
-
-  console.log("Upload Results", uploadResults);
-
+// Simplified storage function that just returns the images
+export async function storeImages(images: {url: string, prompt: string, [key: string]: any}[]) {
+  console.log("Images generated:", images);
+  // No actual storage, just return images as is
   return {
     error: null,
     success: true,
-    data: { results: uploadResults },
+    data: images,
   };
 }
 
-export async function getImages(limit?: number) {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return {
-      error: "Unauthorized",
-      success: false,
-      data: null,
-    };
-  }
-
-  let query = supabase
-    .from("generated_images")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
-
-  if (limit) {
-    query = query.limit(limit);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    return {
-      error: error.message || "Failed to get images",
-      success: false,
-      data: null,
-    };
-  }
-
-  const imageWithUrls = await Promise.all(
-    data.map(
-      async (
-        image: Database["public"]["Tables"]["generated_images"]["Row"],
-      ) => {
-        const { data } = await supabase.storage
-          .from("generated_images")
-          .createSignedUrl(`${user.id}/${image.image_name}`, 3600);
-
-        return {
-          ...image,
-          url: data?.signedUrl,
-        };
-      },
-    ),
-  );
-
+// Return empty array since we're not storing images
+export async function getImages() {
   return {
     error: null,
     success: true,
-    data: imageWithUrls || null,
+    data: [],
   };
 }
 
+// Mock function for image deletion
 export async function deleteImage(id: number) {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return {
-      error: "Unauthorized",
-      success: false,
-      data: null,
-    };
-  }
-
-  const { data: imageData, error: fetchError } = await supabase
-    .from("generated_images")
-    .select("image_name")
-    .eq("id", id)
-    .single();
-
-  if (fetchError) {
-    return {
-      error: fetchError.message,
-      success: false,
-      data: null,
-    };
-  }
-
-  if (!imageData || !imageData.image_name) {
-    return {
-      error: "Image not found",
-      success: false,
-      data: null,
-    };
-  }
-
-  const { data, error } = await supabase
-    .from("generated_images")
-    .delete()
-    .eq("id", id)
-    .select();
-
-  if (error) {
-    return {
-      error: error.message,
-      success: false,
-      data: null,
-    };
-  }
-
-  const storagePath = `${user.id}/${imageData.image_name}`;
-  const { error: storageError } = await supabase.storage
-    .from("generated_images")
-    .remove([storagePath]);
-
-  if (storageError) {
-    console.error("Failed to delete from storage:", storageError);
-    return {
-      error: "Image deleted from database but failed to delete from storage",
-      success: true,
-      data: data,
-    };
-  }
-
-  return { error: null, success: true, data: data };
+  return {
+    error: null,
+    success: true,
+    data: { id },
+  };
 }

@@ -14,7 +14,7 @@ const HeroSection = () => {
         </AnimatedGradientText>
       </div>
       <h1 className="lg:text-7xl text-4xl mx-auto text-center font-bold">
-        Welcome to xGen
+        Welcome to SocigenX
       </h1>
       <p className="text-base lg:text-xl mx-auto text-center font-light px-4 text-lime-50">
         The AI-powered platform for creating and managing your social media
@@ -22,7 +22,7 @@ const HeroSection = () => {
       </p>
       <div className="flex flex-row gap-4 mt-4">
         <Link
-          href={"/login?state=signup"}
+          href={"/dashboard"}
           className="text-white px-6 py-2 rounded-md bg-lime-500/10 border border-lime-500 hover:bg-transparent transition-all duration-300">
           <h1 className="text-sm font-bold">Get Started</h1>
         </Link>

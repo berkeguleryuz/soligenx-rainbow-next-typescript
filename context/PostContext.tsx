@@ -7,9 +7,13 @@ import React, {
   useState,
 } from "react";
 
+interface PostItem {
+  post: string;
+}
+
 interface PostContextTypes {
-  output: { data: { post: string }[] };
-  setOutput: Dispatch<SetStateAction<{ data: { post: string }[] }>>;
+  output: { data: PostItem[] };
+  setOutput: Dispatch<SetStateAction<{ data: PostItem[] }>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
@@ -22,7 +26,7 @@ export const PostContext = createContext<PostContextTypes>({
 });
 
 export const PostProvider = ({ children }: { children: React.ReactNode }) => {
-  const [output, setOutput] = useState<{ data: { post: string }[] }>({
+  const [output, setOutput] = useState<{ data: PostItem[] }>({
     data: [],
   });
   const [loading, setLoading] = useState(false);

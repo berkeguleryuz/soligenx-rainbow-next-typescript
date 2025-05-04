@@ -81,16 +81,23 @@ const UserInput = () => {
     `;
 
     try {
-      const { data } = await generatePost(
+      const result = await generatePost(
         userInputValues,
         values.temperature,
         values.model,
       );
 
-      setOutput(data || { data: [] });
+      if (result.success && result.data && result.data.data) {
+        setOutput({ data: result.data.data });
+      } else {
+        console.error(result.error);
+        setOutput({ data: [] });
+      }
+      
       setLoading(false);
     } catch (error) {
       console.log(error);
+      setOutput({ data: [] });
       setLoading(false);
     }
   }
@@ -135,7 +142,7 @@ const UserInput = () => {
                             </div>
                           </SelectItem>
                           <SelectItem
-                            value="deepseek-r1-distill-qwen-32b"
+                            value="deepseek-r1-distill-llama-70b"
                             className="focus:bg-lime-500/70">
                             <div className="flex items-center gap-2">
                               <DeepSeekIcon className="w-4 h-4" />

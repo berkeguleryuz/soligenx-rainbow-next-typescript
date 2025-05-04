@@ -31,7 +31,16 @@ import {
 import { InfoIcon, Loader2 } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import useGeneratedStore from "@/store/useGeneratedStore";
-import { Tables } from "@/database.types";
+
+// Mock types to replace database.types import
+interface Tables {
+  model_id: string;
+  model_name: string;
+  training_status: string;
+  trigger_word?: string;
+  gender?: string;
+  version?: string;
+}
 
 export const imageGenerationFormSchema = z.object({
   model: z.string({
@@ -71,7 +80,7 @@ export const imageGenerationFormSchema = z.object({
 });
 
 interface ImageUserInputProps {
-  userModels: Tables<"models">[];
+  userModels: Tables[];
   model_id?: string;
 }
 

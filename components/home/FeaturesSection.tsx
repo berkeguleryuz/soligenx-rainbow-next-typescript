@@ -136,7 +136,7 @@ const FeaturesSection = () => {
                 Discover how our AI-powered platform can transform your creative
                 workflow and boost your productivity.
               </p>
-              <Link href="/login">
+              <Link href="/dashboard">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

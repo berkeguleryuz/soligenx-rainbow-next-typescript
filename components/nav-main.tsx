@@ -1,12 +1,10 @@
 "use client";
 
 import {
-  Bot,
   BotMessageSquare,
-  BrainCircuit,
-  Dna,
   ImageIcon,
   LayoutDashboard,
+  Settings,
 } from "lucide-react";
 import {
   SidebarGroup,
@@ -28,7 +26,7 @@ const navItems = [
   {
     title: "Generate Image",
     url: "/generate-image",
-    icon: Bot,
+    icon: ImageIcon,
   },
   {
     title: "Generate Post",
@@ -36,19 +34,9 @@ const navItems = [
     icon: BotMessageSquare,
   },
   {
-    title: "Train Model",
-    url: "/train-model",
-    icon: BrainCircuit,
-  },
-  {
-    title: "My Generations",
-    url: "/my-generations",
-    icon: ImageIcon,
-  },
-  {
-    title: "My Models",
-    url: "/my-models",
-    icon: Dna,
+    title: "Settings",
+    url: "/settings",
+    icon: Settings,
   },
 ];
 

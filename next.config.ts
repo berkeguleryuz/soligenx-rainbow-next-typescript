@@ -4,9 +4,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
+        protocol: "https",
         hostname: "replicate.delivery",
-        pathname: '**',
+        pathname: "**",
       },
       {
         protocol: "https",
@@ -17,10 +17,11 @@ const nextConfig: NextConfig = {
   },
   webpack: (config) => {
     config.module.exprContextCritical = false;
-    
+
     config.module.unknownContextCritical = false;
     config.module.unknownContextRegExp = /^((?!replicate).)*$/;
-    
+    config.externals.push("pino-pretty", "lokijs", "encoding");
+
     return config;
   },
 };

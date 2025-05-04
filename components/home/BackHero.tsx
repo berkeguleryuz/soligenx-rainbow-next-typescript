@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { AnimatedGradientText } from "../ui/animated-gradient-tsx";
 import { StarsIcon } from "lucide-react";
@@ -5,6 +6,8 @@ import Link from "next/link";
 import { Marquee } from "../ui/marquee";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount } from "wagmi";
 
 const images = [
   "/hero/1.jpg",
@@ -59,6 +62,8 @@ const Column = ({
 };
 
 const BackHero = () => {
+  const { isConnected } = useAccount();
+
   return (
     <section className="mt-24 rounded-b-full w-full relative overflow-hidden min-h-screen flex flex-col items-center justify-center">
       <div className="relative w-fit mx-auto z-40 flex flex-col items-center justify-center">
@@ -76,11 +81,17 @@ const BackHero = () => {
           platform.
         </p>
 
-        <Link
-          href={"/login?state=signup"}
-          className="bg-lime-500 text-white px-4 py-2 rounded-md hover:bg-lime-600 transition-all duration-300">
-          Get Started
-        </Link>
+        {isConnected ? (
+          <Link
+            href="/dashboard"
+            className="bg-lime-500 text-white px-4 py-2 rounded-md hover:bg-lime-600 transition-all duration-300">
+            Go to Dashboard
+          </Link>
+        ) : (
+          <div className="mt-4">
+            <ConnectButton />
+          </div>
+        )}
       </div>
 
       <div className="absolute top-0 w-full grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 z-10">

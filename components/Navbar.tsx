@@ -10,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const MobileNavItems = () => {
   return (
@@ -30,11 +31,9 @@ const MobileNavItems = () => {
         FAQ
       </Link>
       <div className="border-t border-lime-500/20 my-4" />
-      <Link
-        href="/login"
-        className="bg-lime-500 text-white px-4 py-3 rounded-lg text-center font-medium hover:bg-lime-600 transition-colors duration-200">
-        Login
-      </Link>
+      <div className="w-full flex px-2">
+        <ConnectButton />
+      </div>
     </div>
   );
 };
@@ -67,11 +66,7 @@ const Navbar = () => {
       <Logo />
       <nav className="md:flex items-center gap-4 hidden">
         <NavItems />
-        <Link
-          href="/login"
-          className="bg-lime-500 text-white px-4 py-2 rounded-lg text-center font-medium hover:bg-lime-600 transition-colors duration-200">
-          Login
-        </Link>
+        <ConnectButton />
       </nav>
       <div className="md:hidden">
         <Sheet>
