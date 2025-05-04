@@ -1,5 +1,4 @@
 "use client";
-import { Tables } from "@/database.types";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Download, Trash, X, AlertTriangle } from "lucide-react";
@@ -7,9 +6,24 @@ import toast from "react-hot-toast";
 import { deleteImage } from "@/utils/image-actions";
 import Link from "next/link";
 
+// Local interface to replace Tables import
+interface GeneratedImage {
+  id: number;
+  user_id: string;
+  model: string;
+  prompt: string;
+  aspect_ratio: string;
+  width: number;
+  height: number;
+  guidance: number;
+  num_inference_steps: number;
+  output_format: string;
+  created_at: string;
+}
+
 type ImageProps = {
   url: string | undefined;
-} & Tables<"generated_images">;
+} & GeneratedImage;
 
 interface GalleryProps {
   images: ImageProps[];

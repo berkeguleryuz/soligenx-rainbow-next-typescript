@@ -1,10 +1,17 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Database } from "@/database.types";
 import { Badge } from "../ui/badge";
 
+// Local interface to replace Database import
+interface Model {
+  id: number;
+  model_name: string;
+  gender: string;
+  training_status?: string;
+}
+
 interface RecentModelsProps {
-  models: Database["public"]["Tables"]["models"]["Row"][];
+  models: Model[];
 }
 
 const RecentModels = ({ models }: RecentModelsProps) => {

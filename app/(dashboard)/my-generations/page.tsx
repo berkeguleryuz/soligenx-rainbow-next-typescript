@@ -4,6 +4,76 @@ import React, { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { getImages } from "@/utils/image-actions";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Loader2, Wallet } from "lucide-react";
+
+// Custom themed ConnectButton
+const CustomConnectButton = () => {
+  return (
+    <ConnectButton.Custom>
+      {({
+        account,
+        chain,
+        openAccountModal,
+        openChainModal,
+        openConnectModal,
+        mounted,
+      }) => {
+        const ready = mounted;
+        const connected = ready && account && chain;
+
+        return (
+          <div
+            {...(!ready && {
+              "aria-hidden": true,
+              style: {
+                opacity: 0,
+                pointerEvents: "none",
+                userSelect: "none",
+              },
+            })}
+            className="w-full max-w-[360px]">
+            {!connected ? (
+              <button
+                onClick={openConnectModal}
+                type="button"
+                className="w-full flex items-center justify-center gap-3 bg-lime-500 hover:bg-lime-600 text-black font-medium transition-colors rounded-lg px-6 py-3 text-base">
+                <Wallet className="h-5 w-5" />
+                Connect Wallet
+              </button>
+            ) : (
+              <div className="flex flex-col gap-3 w-full">
+                <button
+                  onClick={openChainModal}
+                  type="button"
+                  className="w-full flex items-center justify-center gap-3 bg-lime-500/20 hover:bg-lime-500/30 text-lime-200 transition-colors rounded-lg px-4 py-3 text-base">
+                  {chain.hasIcon && (
+                    <div className="w-5 h-5 overflow-hidden">
+                      {chain.iconUrl && (
+                        <img
+                          alt={chain.name ?? "Chain icon"}
+                          src={chain.iconUrl}
+                          className="w-5 h-5"
+                        />
+                      )}
+                    </div>
+                  )}
+                  <span className="font-medium">{chain.name}</span>
+                </button>
+
+                <button
+                  onClick={openAccountModal}
+                  type="button"
+                  className="w-full flex items-center justify-center gap-3 bg-lime-500/20 hover:bg-lime-500/30 text-lime-200 transition-colors rounded-lg px-4 py-3 text-base">
+                  <span className="font-medium truncate">{account.displayName}</span>
+                </button>
+              </div>
+            )}
+          </div>
+        );
+      }}
+    </ConnectButton.Custom>
+  );
+};
 
 interface ImageProps {
   id: number;
@@ -61,11 +131,16 @@ const MyGenerationsPage = () => {
 
   if (!isConnected) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4">
-        <h1 className="text-2xl font-bold text-center">
-          Please connect your wallet to view your generations
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-6 p-6 backdrop-blur-sm bg-black/20 rounded-lg border border-lime-500/20">
+        <h1 className="text-2xl font-bold text-center text-lime-200">
+          Connect Your Wallet
         </h1>
-        <ConnectButton />
+        <p className="text-lime-300/70 text-center max-w-md">
+          Please connect your wallet to view your generated images and manage your gallery.
+        </p>
+        <div className="p-2">
+          <CustomConnectButton />
+        </div>
       </div>
     );
   }
@@ -80,7 +155,7 @@ const MyGenerationsPage = () => {
       
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-lime-500"></div>
+          <Loader2 className="h-12 w-12 animate-spin text-lime-500" />
         </div>
       ) : (
         <Gallery images={images} />
