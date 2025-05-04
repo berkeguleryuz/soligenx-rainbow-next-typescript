@@ -151,10 +151,10 @@ const UserInput = () => {
                           </SelectItem>
                           <SelectItem
                             value="mixtral-8x7b-32768"
-                            className="focus:bg-lime-500/70">
-                            <div className="flex items-center gap-2">
+                            className="focus:bg-red-500/70">
+                            <div className="flex items-center gap-2 ">
                               <MistralIcon className="w-4 h-4" />
-                              <p>Mistral</p>
+                              <p>Mistral [Not Available, yet]</p>
                             </div>
                           </SelectItem>
                         </SelectContent>

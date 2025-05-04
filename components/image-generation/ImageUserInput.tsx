@@ -58,7 +58,7 @@ export const imageGenerationFormSchema = z.object({
   num_outputs: z
     .number()
     .min(1, { message: "Number of outputs must be at least 1" })
-    .max(4, { message: "Number of outputs must be less than 4" }),
+    .max(1, { message: "Number of outputs must be 1" }),
   aspect_ratio: z.string({
     required_error: "Aspect ratio is required",
   }),
@@ -437,27 +437,6 @@ const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
                               className="focus:bg-lime-500/70 flex">
                               <div className="flex items-center gap-2">
                                 <p>1</p>
-                              </div>
-                            </SelectItem>
-                            <SelectItem
-                              value="black-forest-labs/flux-schnell"
-                              className="focus:bg-lime-500/70">
-                              <div className="flex items-center gap-2">
-                                <p>2</p>
-                              </div>
-                            </SelectItem>
-                            <SelectItem
-                              value="3"
-                              className="focus:bg-lime-500/70">
-                              <div className="flex items-center gap-2">
-                                <p>3</p>
-                              </div>
-                            </SelectItem>
-                            <SelectItem
-                              value="4"
-                              className="focus:bg-lime-500/70">
-                              <div className="flex items-center gap-2">
-                                <p>4</p>
                               </div>
                             </SelectItem>
                           </SelectContent>

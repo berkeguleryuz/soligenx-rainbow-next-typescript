@@ -1,5 +1,4 @@
 "use client";
-import { Tables } from "@/database.types";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
@@ -16,12 +15,24 @@ import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
+// Local interface to replace Tables import
+interface GeneratedImage {
+  id: number;
+  user_id: string;
+  model: string;
+  prompt: string;
+  aspect_ratio: string;
+  width: number;
+  height: number;
+  guidance: number;
+  num_inference_steps: number;
+  output_format: string;
+  created_at: string;
+  url?: string;
+}
+
 interface RecentImagesProps {
-  images: Array<
-    Tables<"generated_images"> & {
-      url?: string;
-    }
-  >;
+  images: Array<GeneratedImage>;
 }
 
 const RecentImages = ({ images }: RecentImagesProps) => {
