@@ -2,6 +2,7 @@
 
 import {
   BotMessageSquare,
+  Home,
   ImageIcon,
   LayoutDashboard,
   Settings,
@@ -37,6 +38,11 @@ const navItems = [
     title: "Settings",
     url: "/settings",
     icon: Settings,
+  },
+  {
+    title: "HomePage",
+    url: "/",
+    icon: Home,
   },
 ];
 
