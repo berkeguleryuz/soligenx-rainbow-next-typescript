@@ -94,11 +94,6 @@ const MobileNavItems = () => {
     <div className="flex flex-col gap-4 mt-4">
       <Link
         className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-3 rounded-lg hover:bg-lime-500/10 text-lg"
-        href="/#pricing">
-        Pricing
-      </Link>
-      <Link
-        className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-3 rounded-lg hover:bg-lime-500/10 text-lg"
         href="/#features">
         Features
       </Link>
@@ -118,11 +113,6 @@ const MobileNavItems = () => {
 const NavItems = () => {
   return (
     <div className="flex items-center gap-2">
-      <Link
-        className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-2 rounded-lg hover:bg-lime-500/10"
-        href="/#pricing">
-        Pricing
-      </Link>
       <Link
         className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-2 rounded-lg hover:bg-lime-500/10"
         href="/#features">

@@ -92,14 +92,14 @@ const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
     defaultValues: {
       model: model_id
         ? `berkeguleryuz/${model_id}`
-        : "black-forest-labs/flux-dev",
+        : "black-forest-labs/flux-schnell",
       prompt: "",
       guidance: 3.5,
       num_outputs: 1,
       output_format: "webp",
       aspect_ratio: "1:1",
       output_quality: 80,
-      num_inference_steps: 28,
+      num_inference_steps: 4,
     },
   });
 
@@ -192,17 +192,17 @@ const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
                       </FormControl>
                       <SelectContent className="bg-lime-50 font-semibold">
                         <SelectItem
-                          value="black-forest-labs/flux-dev"
-                          className="focus:bg-lime-500/70 flex">
-                          <div className="flex items-center gap-2">
-                            <p>Flux Dev</p>
-                          </div>
-                        </SelectItem>
-                        <SelectItem
                           value="black-forest-labs/flux-schnell"
                           className="focus:bg-lime-500/70">
                           <div className="flex items-center gap-2">
                             <p>Flux Schnell</p>
+                          </div>
+                        </SelectItem>
+                        <SelectItem
+                          value="black-forest-labs/flux-dev"
+                          className="focus:bg-lime-500/70 flex">
+                          <div className="flex items-center gap-2">
+                            <p>Flux Dev</p>
                           </div>
                         </SelectItem>
 
@@ -296,7 +296,7 @@ const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
                     </FormLabel>
                     <FormControl>
                       <Slider
-                        defaultValue={[28]}
+                        defaultValue={[4]}
                         max={
                           form.getValues("model") ===
                           "black-forest-labs/flux-schnell"
