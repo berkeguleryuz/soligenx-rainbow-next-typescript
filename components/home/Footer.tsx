@@ -3,22 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Logo from "../Logo";
-import { FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 const socialLinks = [
-  { name: "X", icon: FaXTwitter, href: "https://twitter.com/clodron" },
-  {
-    name: "Instagram",
-    icon: FaInstagram,
-    href: "https://instagram.com/clodron",
-  },
-  {
-    name: "LinkedIn",
-    icon: FaLinkedin,
-    href: "https://linkedin.com/company/clodron",
-  },
-  { name: "GitHub", icon: FaGithub, href: "https://github.com/clodron" },
+  { name: "X", icon: FaXTwitter, href: "https://x.com/socigenx_ai" }
 ];
 
 const Footer = () => {

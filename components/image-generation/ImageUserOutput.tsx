@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { BorderBeam } from "@/components/ui/border-beam";
-import { MessageCircleDashed } from "lucide-react";
+import { MessageCircleDashed, Loader2 } from "lucide-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import useGeneratedStore from "@/store/useGeneratedStore";
@@ -27,7 +27,7 @@ import useGeneratedStore from "@/store/useGeneratedStore";
 
 const ImageUserOutput = () => {
   const images = useGeneratedStore((state) => state.images);
-  // const loading = useGeneratedStore((state) => state.loading);
+  const loading = useGeneratedStore((state) => state.loading);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -50,7 +50,15 @@ const ImageUserOutput = () => {
         <div>
           <fieldset className="grid gap-6 rounded-[8px] border bg-black/20  min-h-[675px] border-lime-500/20 p-4">
             <legend className="text-lg font-bold">Model Output</legend>
-            {images.length > 0 ? (
+            {loading ? (
+              <div className="flex flex-col items-center justify-center h-[600px] w-full">
+                <Loader2 className="w-16 h-16 text-lime-500 animate-spin" />
+                <h3 className="text-xl font-semibold mt-4">
+                  Generating Image...
+                </h3>
+                <p className="text-lime-400/70 mt-2">This may take a moment</p>
+              </div>
+            ) : images.length > 0 ? (
               <div className="relative flex flex-col items-center justify-center h-[600px] w-full">
                 <div className="relative w-full h-full flex items-center justify-center">
                   <div className="relative max-w-[700px] max-h-[700px] rounded-lg">
@@ -99,6 +107,9 @@ const ImageUserOutput = () => {
               <div className="flex flex-col items-center justify-center h-[500px] text-center p-4">
                 <MessageCircleDashed className="w-24 h-24 text-lime-500 text-opacity-75" />
                 <h3 className="text-xl font-semibold mb-2">No Output Yet</h3>
+                <p className="text-lime-400/70">
+                  Enter a prompt to generate an image
+                </p>
               </div>
             )}
           </fieldset>
