@@ -94,6 +94,11 @@ const MobileNavItems = () => {
     <div className="flex flex-col gap-4 mt-4">
       <Link
         className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-3 rounded-lg hover:bg-lime-500/10 text-lg"
+        href="/dashboard">
+        Dashboard
+      </Link>
+      <Link
+        className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-3 rounded-lg hover:bg-lime-500/10 text-lg"
         href="/#features">
         Features
       </Link>
@@ -103,7 +108,7 @@ const MobileNavItems = () => {
         FAQ
       </Link>
       <div className="border-t border-lime-500/20 my-4" />
-      <div className="w-full flex justify-center px-2">
+      <div className="w-full px-2">
         <CustomConnectButton />
       </div>
     </div>
@@ -113,6 +118,11 @@ const MobileNavItems = () => {
 const NavItems = () => {
   return (
     <div className="flex items-center gap-2">
+      <Link
+        className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-2 rounded-lg hover:bg-lime-500/10"
+        href="/dashboard">
+        Dashboard
+      </Link>
       <Link
         className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-2 rounded-lg hover:bg-lime-500/10"
         href="/#features">
