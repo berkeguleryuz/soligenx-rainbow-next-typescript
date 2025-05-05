@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
 import { AnimatedGradientText } from "../ui/animated-gradient-tsx";
-import {
-  BrainIcon,
-  CalendarIcon,
-  ImageUpIcon,
-  MessageCircleIcon,
-} from "lucide-react";
+import { ImageUpIcon, MessageCircleIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import loginBg from "@/public/login.avif";
@@ -21,22 +16,10 @@ const featureList = [
     gradient: "from-blue-500 to-cyan-500",
   },
   {
-    title: "Post Scheduling",
-    description: "Schedule posts to social media platforms.",
-    icon: <CalendarIcon className="w-5 h-5" strokeWidth={1.5} />,
-    gradient: "from-purple-500 to-pink-500",
-  },
-  {
     title: "Content Generation",
     description: "Generate content for your social media platforms.",
     icon: <MessageCircleIcon className="w-5 h-5" strokeWidth={1.5} />,
     gradient: "from-orange-500 to-red-500",
-  },
-  {
-    title: "Model Training",
-    description: "Train your own AI models.",
-    icon: <BrainIcon className="w-5 h-5" strokeWidth={1.5} />,
-    gradient: "from-green-500 to-emerald-500",
   },
 ];
 

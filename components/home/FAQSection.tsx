@@ -17,11 +17,6 @@ const faqItems = [
       "Our image generation uses state-of-the-art AI models to create high-quality images based on your text descriptions. You can customize various parameters like style, size, and composition to get exactly what you need.",
   },
   {
-    question: "Can I train my own AI models?",
-    answer:
-      "Yes! We provide tools and infrastructure for training custom AI models. You can fine-tune existing models or train new ones based on your specific needs and data.",
-  },
-  {
     question: "What social media platforms are supported?",
     answer:
       "We currently support major social media platforms including Instagram, Twitter, Facebook, and LinkedIn. We're constantly adding support for more platforms based on user demand.",
