@@ -19,6 +19,12 @@ const images = [
   "/hero/7.jpg",
   "/hero/8.jpg",
   "/hero/9.jpg",
+  "/hero/10.png",
+  "/hero/11.jpg",
+  "/hero/12.jpg",
+  "/hero/13.jpg",
+  "/hero/14.jpg",
+  "/hero/15.jpg",
 ];
 
 const Column = ({
