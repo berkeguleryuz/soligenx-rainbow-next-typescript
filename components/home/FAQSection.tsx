@@ -36,7 +36,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="w-full py-24 relative overflow-hidden">
+    <section className="w-full py-24 relative overflow-hidden" id="faq">
       <div className="absolute text-white inset-0 bg-gradient-to-b from-black/50 to-black/20 pointer-events-none" />
       <div className="container mx-auto px-4">
         <motion.div

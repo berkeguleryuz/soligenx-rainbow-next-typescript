@@ -25,7 +25,7 @@ const featureList = [
 
 const FeaturesSection = () => {
   return (
-    <section className="w-full h-full flex flex-col items-center justify-center py-24 relative overflow-hidden">
+    <section className="w-full h-full flex flex-col items-center justify-center py-24 relative overflow-hidden" id="features">
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/20 pointer-events-none" />
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 relative items-center justify-center">
         <div className="col-span-full space-y-6">
