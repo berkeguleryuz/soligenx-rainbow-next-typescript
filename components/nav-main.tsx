@@ -2,6 +2,7 @@
 
 import {
   BotMessageSquare,
+  BrainCircuit,
   Home,
   ImageIcon,
   LayoutDashboard,
@@ -33,6 +34,12 @@ const navItems = [
     title: "Generate Post",
     url: "/generate-post",
     icon: BotMessageSquare,
+  },
+  {
+    title: "Train Model - NotActive",
+    url: "/train-model",
+    icon: BrainCircuit,
+    disabled: true,
   },
   {
     title: "Settings",
