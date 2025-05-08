@@ -5,6 +5,12 @@ import {
 } from "@/components/ui/sidebar";
 import ConnectWalletWrapper from "@/components/ConnectWalletWrapper";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "SocigenX AI",
+  description: "Find the best AI tools for your needs",
+};
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
