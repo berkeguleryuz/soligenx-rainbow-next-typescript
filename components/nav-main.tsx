@@ -36,7 +36,7 @@ const navItems = [
     icon: BotMessageSquare,
   },
   {
-    title: "Train Model - NotActive",
+    title: "Train Model",
     url: "/train-model",
     icon: BrainCircuit,
     disabled: true,
