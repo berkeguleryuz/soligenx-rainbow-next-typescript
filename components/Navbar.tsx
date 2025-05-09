@@ -133,6 +133,11 @@ const NavItems = () => {
         href="/#faq">
         FAQ
       </Link>
+      <Link
+        className="text-white/70 hover:text-white transition-colors duration-200 font-medium px-4 py-2 rounded-lg hover:bg-lime-500/10"
+        href="/docs">
+        Docs
+      </Link>
     </div>
   );
 };

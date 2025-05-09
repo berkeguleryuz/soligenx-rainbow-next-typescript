@@ -93,3 +93,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+.outline-text {
+  -webkit-text-stroke: 1px white;
+}
