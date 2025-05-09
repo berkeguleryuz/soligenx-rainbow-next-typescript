@@ -2,38 +2,9 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-
 import Link from "next/link";
-import { Podcast, WalletIcon, WandSparkles } from "lucide-react";
-import { Button } from "../ui/button";
+import { BookOpen, Cpu, Image, Plus } from "lucide-react";
 import { motion } from "framer-motion";
-
-const actions = [
-  {
-    title: "Generate Image",
-    icon: WandSparkles,
-    href: "/generate-image",
-    description: "Create stunning images with AI",
-    color: "from-lime-500/20 to-lime-500/10",
-    hoverColor: "from-lime-500/30 to-lime-500/20",
-  },
-  {
-    title: "Generate Post",
-    icon: Podcast,
-    href: "/generate-post",
-    description: "Create engaging social media posts",
-    color: "from-lime-500/20 to-lime-500/10",
-    hoverColor: "from-lime-500/30 to-lime-500/20",
-  },
-  {
-    title: "Wallet",
-    icon: WalletIcon,
-    href: "/settings",
-    description: "Manage your wallet",
-    color: "from-lime-500/20 to-lime-500/10",
-    hoverColor: "from-lime-500/30 to-lime-500/20",
-  },
-];
 
 const QuickActions = () => {
   return (
@@ -45,27 +16,85 @@ const QuickActions = () => {
       </CardHeader>
       <CardContent className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
         <div className="lg:col-span-3 col-span-2 w-full flex flex-wrap justify-center gap-4">
-          {actions.map((action, index) => (
-            <motion.div
-              key={action.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="w-full md:w-[calc(50%-8px)] lg:w-[calc(33.33%-16px)]">
-              <Link href={action.href}>
-                <Button className="w-full h-full min-h-[100px] flex flex-col items-center justify-center gap-2 bg-gradient-to-br hover:bg-gradient-to-br transition-all duration-300 hover:scale-[1.02] hover:ring-2 hover:ring-lime-500/20">
-                  <div
-                    className={`p-2 rounded-full bg-gradient-to-br ${action.color} group-hover:${action.hoverColor} transition-colors duration-300`}>
-                    <action.icon className="w-5 h-5 text-lime-500" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="w-full md:w-[calc(50%-8px)] lg:w-[calc(33.33%-16px)]">
+            <Link href="/train-model">
+              <div className="bg-black/20 hover:bg-black/30 border border-lime-500/20 rounded-lg p-4 transition-all duration-300 h-full">
+                <div className="flex flex-col h-full">
+                  <div className="p-2 bg-lime-900/30 rounded-full w-fit mb-3">
+                    <Cpu className="w-5 h-5 text-lime-400" />
                   </div>
-                  <span className="font-medium">{action.title}</span>
-                  <span className="text-sm text-white/60">
-                    {action.description}
-                  </span>
-                </Button>
-              </Link>
-            </motion.div>
-          ))}
+                  <h3 className="text-lime-200 font-medium mb-2">Train New Model</h3>
+                  <p className="text-lime-300/70 text-sm flex-grow">
+                    Create your own custom AI model using your images
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="w-full md:w-[calc(50%-8px)] lg:w-[calc(33.33%-16px)]">
+            <Link href="/generate-image">
+              <div className="bg-black/20 hover:bg-black/30 border border-lime-500/20 rounded-lg p-4 transition-all duration-300 h-full">
+                <div className="flex flex-col h-full">
+                  <div className="p-2 bg-lime-900/30 rounded-full w-fit mb-3">
+                    <Image className="w-5 h-5 text-lime-400" />
+                  </div>
+                  <h3 className="text-lime-200 font-medium mb-2">Generate Image</h3>
+                  <p className="text-lime-300/70 text-sm flex-grow">
+                    Create images using your trained models
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="w-full md:w-[calc(50%-8px)] lg:w-[calc(33.33%-16px)]">
+            <Link href="/models">
+              <div className="bg-black/20 hover:bg-black/30 border border-lime-500/20 rounded-lg p-4 transition-all duration-300 h-full">
+                <div className="flex flex-col h-full">
+                  <div className="p-2 bg-lime-900/30 rounded-full w-fit mb-3">
+                    <Plus className="w-5 h-5 text-lime-400" />
+                  </div>
+                  <h3 className="text-lime-200 font-medium mb-2">My Models</h3>
+                  <p className="text-lime-300/70 text-sm flex-grow">
+                    View and manage all your trained models
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="w-full md:w-[calc(50%-8px)] lg:w-[calc(33.33%-16px)]">
+            <Link href="/docs">
+              <div className="bg-black/20 hover:bg-black/30 border border-lime-500/20 rounded-lg p-4 transition-all duration-300 h-full">
+                <div className="flex flex-col h-full">
+                  <div className="p-2 bg-lime-900/30 rounded-full w-fit mb-3">
+                    <BookOpen className="w-5 h-5 text-lime-400" />
+                  </div>
+                  <h3 className="text-lime-200 font-medium mb-2">Documentation</h3>
+                  <p className="text-lime-300/70 text-sm flex-grow">
+                    Learn how to use the platform effectively
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
         </div>
       </CardContent>
     </Card>
