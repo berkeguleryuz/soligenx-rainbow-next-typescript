@@ -28,9 +28,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { InfoIcon, Loader2 } from "lucide-react";
+import { InfoIcon } from "lucide-react";
 import { Textarea } from "../ui/textarea";
-import useGeneratedStore from "@/store/useGeneratedStore";
+// import useGeneratedStore from "@/store/useGeneratedStore";
 
 // Mock types to replace database.types import
 interface Tables {
@@ -86,7 +86,7 @@ interface ImageUserInputProps {
 
 const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
   // const generateImage = useGeneratedStore((state) => state.generateImage);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof imageGenerationFormSchema>>({
     resolver: zodResolver(imageGenerationFormSchema),
     defaultValues: {
@@ -634,7 +634,7 @@ const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
               type="submit"
               className="font-semibold leading-tight tracking-wider text-white px-12 py-2 rounded-md bg-lime-500/10 border border-lime-500 hover:bg-lime-700 transition-all duration-300 mx-auto text-center disabled"
               disabled={true}>
-              {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+              {/* {loading && <Loader2 className="w-4 h-4 animate-spin" />} */}
               Generate[Not Active]
             </Button>
           </fieldset>
