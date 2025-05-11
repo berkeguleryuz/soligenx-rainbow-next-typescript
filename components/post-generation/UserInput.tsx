@@ -349,9 +349,9 @@ const UserInput = () => {
             <Button
               type="submit"
               className="font-semibold leading-tight tracking-wider text-white px-12 py-2 rounded-md bg-lime-500/10 border border-lime-500 hover:bg-lime-700 transition-all duration-300 mx-auto text-center"
-              disabled={loading}>
+              disabled={true}>
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              Generate
+              Generate[Not Active]
             </Button>
           </form>
         </Form>
