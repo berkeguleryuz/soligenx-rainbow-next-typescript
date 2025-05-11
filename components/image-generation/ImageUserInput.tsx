@@ -85,7 +85,7 @@ interface ImageUserInputProps {
 }
 
 const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
-  const generateImage = useGeneratedStore((state) => state.generateImage);
+  // const generateImage = useGeneratedStore((state) => state.generateImage);
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof imageGenerationFormSchema>>({
     resolver: zodResolver(imageGenerationFormSchema),
@@ -122,26 +122,30 @@ const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
     return () => subscription.unsubscribe();
   }, [form]);
 
-  async function onSubmit(values: z.infer<typeof imageGenerationFormSchema>) {
-    setLoading(true);
-    const newValues = {
-      ...values,
-      prompt: values.model.startsWith("berkeguleryuz/")
-        ? (() => {
-            const modelId = values.model
-              .replace("berkeguleryuz/", "")
-              .split(":")[0];
-            const selectedModel = userModels.find(
-              (model) => model.model_id === modelId,
-            );
-            return `photo of a ${selectedModel?.trigger_word || "CLDRN"} ${
-              selectedModel?.gender
-            }, ${values.prompt}`;
-          })()
-        : values.prompt,
-    };
-    await generateImage(newValues);
-    setLoading(false);
+  // async function onSubmit(values: z.infer<typeof imageGenerationFormSchema>) {
+  //   setLoading(true);
+  //   const newValues = {
+  //     ...values,
+  //     prompt: values.model.startsWith("berkeguleryuz/")
+  //       ? (() => {
+  //           const modelId = values.model
+  //             .replace("berkeguleryuz/", "")
+  //             .split(":")[0];
+  //           const selectedModel = userModels.find(
+  //             (model) => model.model_id === modelId,
+  //           );
+  //           return `photo of a ${selectedModel?.trigger_word || "CLDRN"} ${
+  //             selectedModel?.gender
+  //           }, ${values.prompt}`;
+  //         })()
+  //       : values.prompt,
+  //   };
+  //   await generateImage(newValues);
+  //   setLoading(false);
+  // }
+
+  async function onSubmit() {
+    console.log("disabled");
   }
   return (
     <div className="bg-black/20 hover:bg-black/30 transition-all duration-300 border-lime-500/20 text-white backdrop-blur-sm p-4 rounded-lg h-full">
@@ -628,10 +632,10 @@ const ImageUserInput = ({ userModels, model_id }: ImageUserInputProps) => {
             </div>
             <Button
               type="submit"
-              className="font-semibold leading-tight tracking-wider text-white px-12 py-2 rounded-md bg-lime-500/10 border border-lime-500 hover:bg-lime-700 transition-all duration-300 mx-auto text-center"
-              disabled={loading}>
+              className="font-semibold leading-tight tracking-wider text-white px-12 py-2 rounded-md bg-lime-500/10 border border-lime-500 hover:bg-lime-700 transition-all duration-300 mx-auto text-center disabled"
+              disabled={true}>
               {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-              Generate
+              Generate[Not Active]
             </Button>
           </fieldset>
         </form>
